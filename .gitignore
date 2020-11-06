@@ -1,5 +1,5 @@
-.idea/
-./model/
-./__pycache__/
-./performance/
+.idea
+model
+__pycache__
+performance
 
