@@ -1,20 +1,21 @@
+import collections
+import copy
+import csv
+import cv2
+import os
+import random
+
 import numpy as np
 import pandas as pd
-
-import csv
-import os, cv2
-import copy
-
-import random
-import collections
 from PIL import Image
+
 
 # from threadsafe_iter import threadsafe_generator
 # from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
 class DataUtils:
-    def __init__(self, label_file, data_folder, model_dir='./model', batch_size=16):
+    def __init__(self, label_file, data_folder, model_dir='./model', train_batch_size=2, pred_batch_size=1):
         """
 
         :param label_file:
@@ -22,99 +23,42 @@ class DataUtils:
         """
         self.model_dir = model_dir
         self.ORIG_CHANNEL = 1
-        self.grid_resolution = 48
+        self.grid_resolution = 24
         self.image_width = 1920
         self.image_height = 1200
         self.width_box_num = self.image_width // self.grid_resolution
         self.height_box_num = self.image_height // self.grid_resolution
-        self.box_num_per_grid = 5
+        self.anchor_priors = [[754, 625], [434, 387], [257, 203], [141, 104], [59, 55]]
+        self.box_num_per_grid = len(self.anchor_priors)
         self.classes = {'Car': 0, 'Truck': 1, 'Pedestrian': 2}
+        self.reverse_classes = {0: 'Car', 1: 'Truck', 2: 'Pedestrian'}
         self.label_file = label_file
         self.data_folder = data_folder
         self.labels = load_data(label_file)
-        self.dict_labels = self.labels_to_dict()
+        self.dict_labels = self.labels_to_dict(self.labels)
         self.train_fnames, self.val_fnames = self.data_partition(self.dict_labels, tv_ratio=0.1, ratio=1,
                                                                  random_seed=1, save_to_file=False)
-        self.train_batch_size = batch_size
+        self.train_batch_size = train_batch_size
+        self.pred_batch_size = pred_batch_size
         self.train_data_gen = self.train_data_generator(self.train_fnames, self.data_folder,
                                                         batch_size=self.train_batch_size, shuffle=True)
         self.val_data_gen = self.eval_data_generator(self.val_fnames, self.data_folder,
                                                      batch_size=self.train_batch_size)
+        self.pred_data_gen = self.pred_data_generator(self.val_fnames, self.data_folder,
+                                                      batch_size=self.pred_batch_size)
 
-    def labels_to_dict(self):
+        self.val_data_gt = self.fetch_groundtruth(self.val_fnames)
+        if len(self.val_data_gt) % self.train_batch_size:
+            counts = len(self.val_data_gt) // self.train_batch_size * self.train_batch_size
+            self.val_data_gt = self.val_data_gt[0:counts]
+
+    @staticmethod
+    def labels_to_dict(labels):
         re = collections.defaultdict(list)
-        for label in self.labels:
+        for label in labels:
             re[label[4]].append(label)
 
         return re
-
-    @staticmethod
-    def mat_to_dict(ids, f_mat):
-        """
-        Convert id list and feature matrix into dictionary.
-        """
-        res = dict()
-        for id_, f in zip(ids, f_mat):
-            res[id_] = f
-
-        return res
-
-    def normalizer(self, mat, norm_avg, norm_std):
-        mat = mat.astype(float)
-        for i in range(self.ORIG_CHANNEL):
-            mat[i] = (mat[i] - norm_avg[i]) / norm_std[i]
-
-        return mat
-
-    def channel_norm_params(self, namelst, folder):
-
-        avg_lst = [0, 0, 0, 0]
-        for i, name in enumerate(namelst):
-            image_arr = self.get_image_arr([name], folder)[0]
-            for j in range(self.ORIG_CHANNEL):
-                avg_tmp = np.mean(image_arr[j])
-
-                avg_lst[j] = self.inc_avg(avg_lst[j], i + 1, avg_tmp)
-        print([round(item, 2) for item in avg_lst])
-
-        std_lst = [0, 0, 0, 0]
-        for i, name in enumerate(namelst):
-            image_arr = self.get_image_arr([name], folder)[0]
-            for j in range(self.ORIG_CHANNEL):
-                std_tmp = np.sqrt(np.mean((image_arr[j] - avg_lst[j]) ** 2))
-                std_lst[j] = self.inc_std(std_lst[j], i + 1, std_tmp)
-        print([round(item, 2) for item in std_lst])
-
-        return avg_lst, std_lst
-
-    @staticmethod
-    def inc_avg(avg, N, x):
-
-        if N >= 1:
-            return avg * (N - 1) / N + x / N
-        else:
-            raise Exception('N must be zero or positive integer.')
-
-    @staticmethod
-    def inc_std(std, N, x):
-
-        if N >= 1:
-            return (std ** 2 * (N - 1) / N + x ** 2 / N) ** 0.5
-        else:
-            raise Exception('N must be zero or positive integer.')
-
-    def get_image_arr(self, fname_lst, folder):
-        """
-        Get full dimension image array in given filename list.
-        fname_lst, list of file names.
-
-        Return image array.
-        """
-        img_arr = []
-        for fname in fname_lst:
-            img_arr.append(self.get_image(fname, folder))
-
-        return np.array(img_arr)
 
     def get_image(self, fname, folder, aug=True):
 
@@ -126,30 +70,18 @@ class DataUtils:
 
         return np.array(im.convert('RGB'))
 
-    @staticmethod
-    def pick_labels(f_dict, fname_lst):
-        """
-        Pick labels from f_dict.
-        The picked feature matrix corresponding to file in fname_lst.
-
-        f_dict, diction with fname as key and label vector as value.
-        fname_lst, list of file names.
-
-        Return label vectors.
-        """
-        res = []
-        for fname in fname_lst:
-            res.append(f_dict[fname])
-
-        #     print("{} feature vector picked: ".format(len(res)))
-
-        return np.array(res)
-
     def fetch_data_x(self, fname, folder):
         return self.get_image(fname, folder, aug=False) / 255.
 
     def fetch_data_y(self, fname):
         return self.label_transform(fname)
+
+    def fetch_groundtruth(self, fnames):
+        res = []
+        for fname in fnames:
+            res.append(self.fetch_data_y(fname))
+
+        return np.array(res)
 
     def label_transform(self, fname):
         res = np.zeros((self.height_box_num, self.width_box_num, 5 + len(self.classes.keys())))
@@ -171,87 +103,24 @@ class DataUtils:
 
         return res
 
-    @staticmethod
-    def get_weights(labels, scale=10, delta=1, threshold=0.004):
-        """
-        Calculate weights for positive samples and negative samples.
-        labels, label vectors
-        delta, small number to avoid divided by zero
-        threshold, maximum weight threshold
+    def label_transform_v2(self, fname):
+        res = np.zeros((self.height_box_num, self.width_box_num, self.box_num_per_grid, 5 + len(self.classes.keys())))
+        for label in self.dict_labels[fname]:
+            xmin, ymin, xmax, ymax, fname, label, url = label
+            # ious = [iou(box1=, box2=)]
 
-        Return weight for positive, negative; count for positive, negative.
-        """
-        samples = np.squeeze(labels)
-
-        (N, N_c) = samples.shape  # sample scale, classes
-
-        N_p = np.sum(samples, axis=0)
-
-        N_n = N - N_p
-
-        W_p = N_n / N
-
-        # W_p = np.array([item if item < threshold else threshold for item in W_p])
-        #
-        # W_n = np.array([item if item < threshold else threshold for item in W_n])
-        #
-        return W_p, 1 - W_p, N_p, N_n
-
-    @staticmethod
-    def showWeights(W_p, W_n, N_p, N_n):
-        """
-        Show weighted weights W_p, W_n and Count N_p, N_n.
-        """
-        print([round(item, 4) for item in W_p])
-        print([round(item, 4) for item in W_n])
-        print([int(item) for item in N_p])
-        print([int(item) for item in N_n])
-
-    @staticmethod
-    def label_encode(target, cnumber=28):
-        """
-        target, 2-d list of string
-        """
-        r = len(target)
-        if r == 0:
-            return []
-
-        res = np.zeros([r, cnumber])
-        for i, str_lst in enumerate(target):
-            for item in str_lst:
-                col = int(item)
-                res[i][col] = 1
-
-        return res.astype("int")
-
-    @staticmethod
-    def convert_res_str(hotcode):
-        if len(hotcode) == 0:
-            return "0"
-        res = ""
-        for item in hotcode:
-            res += str(item)
-            res += " "
-
-        return res[:-1]
-
-    @staticmethod
-    def lst_substract(lst1, lst2):
-        """
-
-        :param lst1:
-        :param lst2:
-        :return:
-        """
-        return list(set(lst1) - set(lst2))
-
-    @staticmethod
-    def load_test_fname(folder):
-        test_f_lst = os.listdir(folder)
-        test_f_set = set([item.split("_")[0] for item in test_f_lst])
-        test_flst = list(test_f_set)
-
-        return test_flst
+            j = (xmax + xmin) // 2 // self.grid_resolution
+            i = (ymin + ymax) // 2 // self.grid_resolution
+            c = 1.
+            x_ = (xmin + xmax) / 2. / self.image_width
+            y_ = (ymin + ymax) / 2. / self.image_height
+            w = (xmax - xmin) * 1. / self.image_width
+            h = (ymax - ymin) * 1. / self.image_height
+            p_c = [0, 0, 0]
+            p_c[self.classes[label]] = 1
+            temp = [c, x_, y_, w, h]
+            temp.extend(p_c)
+            res[i][j] = np.array(temp)
 
     def data_partition(self, f_dict, tv_ratio=0.1, ratio=0.002, random_seed=None, save_to_file=False):
         """
@@ -305,16 +174,17 @@ class DataUtils:
 
     # @threadsafe_generator
     def eval_data_generator(self, fnames, folder, batch_size):
-        offset = 0
-        total = len(fnames)
-        while offset + batch_size <= total:
-            X, Y = [], []
-            for fname in fnames[offset:offset + batch_size]:
-                X.append(self.fetch_data_x(fname, folder))
-                Y.append(self.fetch_data_y(fname))
+        while True:
+            offset = 0
+            total = len(fnames)
+            while offset + batch_size <= total:
+                X, Y = [], []
+                for fname in fnames[offset:offset + batch_size]:
+                    X.append(self.fetch_data_x(fname, folder))
+                    Y.append(self.fetch_data_y(fname))
 
-            offset += batch_size
-            yield np.array(X), np.array(Y)
+                offset += batch_size
+                yield np.array(X), np.array(Y)
 
     # @threadsafe_generator
     def pred_data_generator(self, fnames, folder, batch_size):
@@ -328,36 +198,6 @@ class DataUtils:
             offset += batch_size
             yield np.array(X)
 
-    @staticmethod
-    def convert_y(y_, decode=True):
-        temp = []
-        if decode:
-            for i, item in enumerate(y_):
-                if item > 0.5:
-                    temp.append(i)
-        else:
-            for i, item in enumerate(y_):
-                if item > 0.5:
-                    temp.append(1)
-                else:
-                    temp.append(0)
-
-        return temp
-
-    def show_labeled_img(self, fname):
-        labels = self.dict_labels[fname]
-        image = cv2.imread(os.path.join(self.data_folder, fname))
-        for label in labels:
-            xmin, ymin, xmax, ymax, fname, label, url = label
-            top_left = (xmin, ymin)
-            bottom_right = (xmax, ymax)
-            cv2.rectangle(image, top_left, bottom_right, color=(0, 255, 0))
-        cv2.namedWindow('current_image', cv2.WINDOW_AUTOSIZE)
-
-        cv2.imshow('current_image', image)
-        cv2.waitKey(3000)
-        cv2.destroyAllWindows()
-
 
 def predict_refine(predicts, num_bbox=5, num_classes=3, score_threshold=(0.5, 0.5, 0.5), iou_threshold=0.5):
     """
@@ -368,9 +208,9 @@ def predict_refine(predicts, num_bbox=5, num_classes=3, score_threshold=(0.5, 0.
     :param score_threshold:
     :param iou_threshold:
     :return: class specified predict box list, each class has a corresponding predict box list,
-        each box like (class_specified_confidence, xmin, ymin, xmax, ymax)
+        each box like (class_specified_confidence, x, y, w, h)
+        shape num_classes * N * 5
     """
-
     grid_y, grid_x, channel = np.shape(predicts)
 
     pred_bboxes = np.stack(np.split(predicts[:, :, 0:5*num_bbox], indices_or_sections=num_bbox, axis=-1), axis=2)
@@ -382,23 +222,28 @@ def predict_refine(predicts, num_bbox=5, num_classes=3, score_threshold=(0.5, 0.
         temp.append(np.expand_dims(multi, axis=-1))
 
     class_confs = np.concatenate(temp, axis=-1)   # grid_y * grid_x * num_box * num_classes
-    print()
     res = []
     for i in range(num_classes):
+        # print('class {}'.format(i))
         class_conf = np.expand_dims(class_confs[:, :, :, i], axis=-1)
         positions = pred_bboxes[:, :, :, 1:]
         bboxes = np.concatenate([class_conf, positions], axis=-1)
         candidate_lst = []
         for j in range(grid_y):
             for k in range(grid_x):
-                candidate_lst.extend(bboxes[i][j])
+                candidate_lst.extend(bboxes[j][k])
 
-        print(np.array(candidate_lst).shape)
         candidate_lst = list(filter(lambda x: x[0] > score_threshold[i], candidate_lst))
-        idxes = list(reversed(np.argsort(candidate_lst[:, 0])))
-        candidates = candidate_lst[idxes]
+        # print('candidates: {}'.format(len(candidate_lst)))
+        if len(candidate_lst) > 0:
+            candidate_lst = np.array(candidate_lst)
+            idxes = list(reversed(np.argsort(candidate_lst[:, 0])))
+            candidates = candidate_lst[idxes]
 
-        final_bboxes = non_max_suppression(candidates, iou_threshold)
+            final_bboxes = non_max_suppression(list(candidates), iou_threshold)
+        else:
+            final_bboxes = []
+        # print('final: {}'.format(len(final_bboxes)))
         res.append(final_bboxes)
 
     return res
@@ -407,14 +252,14 @@ def predict_refine(predicts, num_bbox=5, num_classes=3, score_threshold=(0.5, 0.
 def non_max_suppression(candidate_bboxs, iou_threshold):
     """
 
-    :param candidate_bboxs: each box is like [conf, xmin, ymin, xmax, ymax, conf]
+    :param candidate_bboxs: each box is like [conf, x, y, w, h]
     :param iou_threshold:
-    :return: remained bboxs: each box is like [conf, xmin, ymin, xmax, ymax, conf]
+    :return: remained bboxs: each box is like [conf, x, y, w, h]
     """
     res = []
     while candidate_bboxs:
         picked = candidate_bboxs[0]
-        res.append(picked)
+        res.append(list(picked))
         candidate_bboxs = list(filter(lambda x: iou(x[1:], picked[1:]) < iou_threshold, candidate_bboxs))
 
     return res
@@ -423,13 +268,25 @@ def non_max_suppression(candidate_bboxs, iou_threshold):
 def iou(box1, box2, epsilon=1e-6):
     """
 
-    :param box1: [xmin1, ymin1, xmax1, ymax1]
-    :param box2: [xmin2, ymin2, xmax2, ymax2]
+    :param box1: [x1, y1, w1, h1]
+    :param box2: [x2, y2, w2, h2]
     :param epsilon:
     :return: scalar, iou of box1 and box2
     """
-    xmin1, ymin1, xmax1, ymax1 = box1
-    xmin2, ymin2, xmax2, ymax2 = box2
+    W = 1920
+    H = 1200
+    x1, y1, w1, h1 = box1
+    x2, y2, w2, h2 = box2
+
+    xmin1 = (x1 - w1/2.) * W
+    xmax1 = (x1 + w1/2.) * W
+    ymin1 = (y1 - h1/2.) * H
+    ymax1 = (y1 + h1/2.) * H
+
+    xmin2 = (x2 - w2 / 2.) * W
+    xmax2 = (x2 + w2 / 2.) * W
+    ymin2 = (y2 - h2 / 2.) * H
+    ymax2 = (y2 + h2 / 2.) * H
 
     xmin = max([xmin1, xmin2])
     ymin = max([ymin1, ymin2])
@@ -445,19 +302,20 @@ def iou(box1, box2, epsilon=1e-6):
         return area_intsec / (area1 + area2 - area_intsec + epsilon)
 
 
-def save_to_file(rows, ckpt=None):
+def save_to_file(rows, filename='result.csv'):
     """
 
     :param rows:
-    :param ckpt:
+    :param filename:
     :return:
     """
-    resfile = 'result_' + ckpt + '.csv' if ckpt else 'result.csv'
-    filepath = "./performance/" + resfile
+    filepath = os.path.join("./performance", filename)
 
-    csv_file = open(filepath, 'w+')
+    csv_file = open(filepath, 'w+', newline='')
     csv_writer = csv.writer(csv_file)
     csv_writer.writerows(rows)
+
+    csv_file.close()
 
 
 def f1_score(rr, pr):
@@ -500,3 +358,27 @@ def dict_substract(dict1, dict2):
         del dict1[key]
 
     return dict1
+
+
+def binned(lst, column, start, end, bins):
+    """
+
+    :param lst: 2d list which to be binned
+    :param column: binning according to which column of 2d list, desc ordered
+    :param start: binning start value
+    :param end: binning end value
+    :param bins: how many bins to do
+    :return:
+    """
+    intervals = np.linspace(start, end, bins+1, endpoint=True)
+
+    res = []
+    j = 0
+    for i in range(bins):
+        temp = []
+        while lst[j][column] <= intervals[i]:
+            temp.append(lst[j])
+            j += 1
+        res.append(list(np.mean(temp, axis=0)))
+
+    return res
