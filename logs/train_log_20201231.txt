@@ -1,0 +1,122 @@
+lr: 0.0005
+lr_decay: 0.95
+decay_epoch: 1
+lambda_prior: 0.005
+lambda_coord_xy: 0.5
+lambda_coord_wh: 0.1
+lambda_obj: 5
+lambda_noobj: 5
+lambda_conf: 0.3
+
+prior epoch: model_35.h5
+prior loss: 0.0025 val_loss: 0.0024
+
+train epoch: 
+
+lr: 0.05
+lr_decay: 0.95
+
+lambda_coord_xy: 5
+lambda_coord_wh: 1
+
+1.0356
+1.0246
+1.02
+
+
+model_200.h5
+0.8202 val_loss:0.8146
+
+
+model_115.h5
+loss: 0.8229 val_loss: 0.8164
+lr:0.01
+from epoch 115 train another 25 epoch
+
+model_140.h5
+loss: 0.8221 val_loss: 0.8151
+
+
+lr: 1
+lambda_coord_xy: 1
+lambda_coord_wh: 1
+cancel loss mean for coordinations
+
+from epoch 35 train another 25 epoch
+
+************************************************************************
+batch_size: 4
+total params: 30.3M
+
+lr: 0.0001
+lambda_prior: 0.005
+
+model_35.h5 (2021-01-12 05:03:50)
+train_loss: 7.167*10^-4 val_loss: 7.57*10^-4
+
+
+************************************************************************
+batch_size: 4
+total params: 30.3M
+
+lr: 0.0001
+lambda_prior: 0.05
+
+model_35.h5 (2021-01-12 21:45:00)
+train_loss: 0.0028  val_loss: 0.0008225
+
+------------------------------------------------------------------------
+
+lambda_coord_xy: 1
+lambda_coord_wh: 1
+
+lr: 0.0001 (35-45), 0.00006 (45-55), 0.00004 (55-65), 0.00003 (65-80), 0.00002 (80-100), 0.00001(100-120)
+
+model_40.h5
+train_loss: 4.13 val_loss: 4.663
+
+model_45.h5
+train_loss: 2.739 val_loss: 3.49
+
+model_60.h5
+train_loss: 0.531 val_loss: 3.419
+
+model_120.h5 (2021-01-15 06:32:17)
+train_loss: 0.15 val_loss: 3.618
+
+-----------------------------------------------------------------------
+from epoch 120 to epoch 135
+
+lr: 0.0005
+lambda_coord_xy: 1
+lambda_coord_wh: 1
+lambda_conf: 1
+
+model_125.h5
+train_loss: 6.363 val_loss: 7.803
+
+model_130.h5
+train_loss: 4.804 val_loss: 6.06
+
+model_135.h5
+train_loss: 3.561 val_loss: 5.96
+
+-----------------------------------------------------------------------
+
+
+from epoch 135 to epoch 250
+
+lr: 0.0006(135-145), 0.0003(145-165), 0.0001(165-185), 0.00003(185-250)
+lambda_coord_xy: 1
+lambda_coord_wh: 1
+lambda_conf: 1
+lambda_obj: 5
+
+
+
+
+
+
+
+
+

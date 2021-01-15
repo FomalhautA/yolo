@@ -120,21 +120,21 @@ def show_predicted_img(fname, labels, predicts, data_folder):
         top_left = (xmin, ymin)
         bottom_right = (xmax, ymax)
         cv2.rectangle(image, top_left, bottom_right, color=(0, 255, 0), thickness=2)
-        cv2.putText(image, classname, org=(xmin, ymin - 10),
-                    fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                    fontScale=0.6, thickness=1, color=(0, 255, 0))
+        # cv2.putText(image, classname, org=(xmin, ymin - 10),
+        #             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+        #             fontScale=0.6, thickness=1, color=(0, 255, 0))
 
     for pred in predicts:
-        xmin, ymin, xmax, ymax, fname, classname, url = pred
+        xmin, ymin, xmax, ymax, fname, classname, url, pc = pred
         top_left = (xmin, ymin)
         bottom_right = (xmax, ymax)
         cv2.rectangle(image, top_left, bottom_right, color=(0, 0, 255), thickness=2)
-        cv2.putText(image, classname, org=(xmin, ymin - 10),
+        cv2.putText(image, classname+str(round(pc, 2)), org=(xmin, ymin - 10),
                     fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.6, thickness=1, color=(0, 0, 255))
 
     cv2.namedWindow('current_image', cv2.WINDOW_AUTOSIZE)
 
     cv2.imshow('current_image', image)
-    cv2.waitKey(20000)
+    cv2.waitKey(10000)
     cv2.destroyAllWindows()

@@ -1,0 +1,19 @@
+lr: 0.0001
+lr_decay: 0.95
+decay_epoch: 1
+lambda_prior: 0.005
+lambda_coord_xy: 0.5
+lambda_coord_wh: 0.1
+lambda_obj: 5
+lambda_noobj: 5
+lambda_conf: 0.3
+
+prior epoch: model_15.h5
+
+prior loss: 0.0068 val_loss: 0.0043
+
+train epoch: model_35.h5
+train loss: 0.0993 val_loss: 0.0987
+
+lr: 0.001
+lr_decay:0.95

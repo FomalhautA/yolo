@@ -1,0 +1,464 @@
+C:\Python36\python36.exe F:/Jupyter/Kaggle/Projects/ObjectDetection/yolo/pipline.py
+2020-11-25 14:27:10.084831: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudart64_101.dll
+Training samples 8297
+2020-11-25 14:27:13.535717: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library nvcuda.dll
+2020-11-25 14:27:13.573447: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1561] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce RTX 2080 computeCapability: 7.5
+coreClock: 1.71GHz coreCount: 46 deviceMemorySize: 8.00GiB deviceMemoryBandwidth: 417.23GiB/s
+2020-11-25 14:27:13.574048: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudart64_101.dll
+2020-11-25 14:27:13.585788: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cublas64_10.dll
+2020-11-25 14:27:13.590791: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cufft64_10.dll
+2020-11-25 14:27:13.593450: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library curand64_10.dll
+2020-11-25 14:27:13.599209: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cusolver64_10.dll
+2020-11-25 14:27:13.675427: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cusparse64_10.dll
+2020-11-25 14:27:13.686902: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudnn64_7.dll
+2020-11-25 14:27:13.687252: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1703] Adding visible gpu devices: 0
+2020-11-25 14:27:13.687766: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+2020-11-25 14:27:13.696090: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x278c37d11a0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-11-25 14:27:13.696537: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-11-25 14:27:13.696958: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1561] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce RTX 2080 computeCapability: 7.5
+coreClock: 1.71GHz coreCount: 46 deviceMemorySize: 8.00GiB deviceMemoryBandwidth: 417.23GiB/s
+2020-11-25 14:27:13.697582: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudart64_101.dll
+2020-11-25 14:27:13.698131: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cublas64_10.dll
+2020-11-25 14:27:13.698460: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cufft64_10.dll
+2020-11-25 14:27:13.698913: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library curand64_10.dll
+2020-11-25 14:27:13.699189: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cusolver64_10.dll
+2020-11-25 14:27:13.699649: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cusparse64_10.dll
+2020-11-25 14:27:13.700129: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudnn64_7.dll
+2020-11-25 14:27:13.700472: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1703] Adding visible gpu devices: 0
+2020-11-25 14:27:14.314036: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1102] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-11-25 14:27:14.314344: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1108]      0 
+2020-11-25 14:27:14.314700: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1121] 0:   N 
+2020-11-25 14:27:14.315055: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1247] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 6201 MB memory) -> physical GPU (device: 0, name: GeForce RTX 2080, pci bus id: 0000:01:00.0, compute capability: 7.5)
+2020-11-25 14:27:14.317980: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x278f5b095c0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2020-11-25 14:27:14.318584: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): GeForce RTX 2080, Compute Capability 7.5
+Epoch 86/100
+2020-11-25 14:27:19.829978: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudnn64_7.dll
+2020-11-25 14:27:21.123062: W tensorflow/stream_executor/gpu/redzone_allocator.cc:314] Internal: Invoking GPU asm compilation is supported on Cuda non-Windows platforms only
+Relying on driver to perform ptx compilation. 
+Modify $PATH to customize ptxas location.
+This message will be only logged once.
+2020-11-25 14:27:21.173664: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cublas64_10.dll
+2020-11-25 14:27:22.495849: W tensorflow/core/common_runtime/bfc_allocator.cc:245] Allocator (GPU_0_bfc) ran out of memory trying to allocate 214.01MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-11-25 14:27:22.496464: W tensorflow/core/common_runtime/bfc_allocator.cc:245] Allocator (GPU_0_bfc) ran out of memory trying to allocate 214.39MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2074/2074 [==============================] - 1913s 923ms/step - loss: 0.2559 - val_loss: 4.9644
+Epoch 87/100
+2074/2074 [==============================] - 1904s 918ms/step - loss: 0.2563 - val_loss: 4.9649
+Epoch 88/100
+2074/2074 [==============================] - 1945s 938ms/step - loss: 0.2629 - val_loss: 4.9636
+Epoch 89/100
+2074/2074 [==============================] - 1915s 923ms/step - loss: 0.2636 - val_loss: 4.9646
+Epoch 90/100
+2073/2074 [============================>.] - ETA: 0s - loss: 0.2647
+Epoch 00090: saving model to ./model\model_90.h5
+2074/2074 [==============================] - 1899s 916ms/step - loss: 0.2647 - val_loss: 4.9643
+Epoch 91/100
+2074/2074 [==============================] - 1921s 926ms/step - loss: 0.2638 - val_loss: 4.9633
+Epoch 92/100
+2074/2074 [==============================] - 1976s 953ms/step - loss: 0.2627 - val_loss: 4.9625
+Epoch 93/100
+2074/2074 [==============================] - 1991s 960ms/step - loss: 0.2633 - val_loss: 4.9637
+Epoch 94/100
+2074/2074 [==============================] - 1891s 912ms/step - loss: 0.2595 - val_loss: 4.9640
+Epoch 95/100
+2073/2074 [============================>.] - ETA: 0s - loss: 0.2577
+Epoch 00095: saving model to ./model\model_95.h5
+2074/2074 [==============================] - 1895s 914ms/step - loss: 0.2577 - val_loss: 4.9629
+Epoch 96/100
+2074/2074 [==============================] - 1893s 913ms/step - loss: 0.2593 - val_loss: 4.9649
+Epoch 97/100
+2074/2074 [==============================] - 1889s 911ms/step - loss: 0.2620 - val_loss: 4.9651
+Epoch 98/100
+2074/2074 [==============================] - 1893s 913ms/step - loss: 0.2609 - val_loss: 4.9641
+Epoch 99/100
+2074/2074 [==============================] - 1897s 915ms/step - loss: 0.2561 - val_loss: 4.9654
+Epoch 100/100
+2073/2074 [============================>.] - ETA: 0s - loss: 0.2631
+Epoch 00100: saving model to ./model\model_100.h5
+2074/2074 [==============================] - 1895s 914ms/step - loss: 0.2630 - val_loss: 4.9658
+2020-11-25 22:26:16.833566: W tensorflow/python/util/util.cc:329] Sets are not currently considered sequences, but this may change in the future, so consider avoiding using them.
+WARNING: Logging before flag parsing goes to stderr.
+W1125 22:26:21.717818 13532 deprecation.py:506] From C:\Python36\lib\site-packages\tensorflow\python\ops\resource_variable_ops.py:1817: calling BaseResourceVariable.__init__ (from tensorflow.python.ops.resource_variable_ops) with constraint is deprecated and will be removed in a future version.
+Instructions for updating:
+If using Keras pass *_constraint arguments to layers.
+Model: "model"
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input_1 (InputLayer)            [(4, 1200, 1920, 3)] 0                                            
+__________________________________________________________________________________________________
+conv2d (Conv2D)                 (4, 1200, 1920, 32)  896         input_1[0][0]                    
+__________________________________________________________________________________________________
+batch_normalization (BatchNorma (4, 1200, 1920, 32)  96          conv2d[0][0]                     
+__________________________________________________________________________________________________
+leaky_re_lu (LeakyReLU)         (4, 1200, 1920, 32)  0           batch_normalization[0][0]        
+__________________________________________________________________________________________________
+max_pooling2d (MaxPooling2D)    (4, 600, 960, 32)    0           leaky_re_lu[0][0]                
+__________________________________________________________________________________________________
+conv2d_1 (Conv2D)               (4, 600, 960, 64)    18496       max_pooling2d[0][0]              
+__________________________________________________________________________________________________
+batch_normalization_1 (BatchNor (4, 600, 960, 64)    192         conv2d_1[0][0]                   
+__________________________________________________________________________________________________
+leaky_re_lu_1 (LeakyReLU)       (4, 600, 960, 64)    0           batch_normalization_1[0][0]      
+__________________________________________________________________________________________________
+max_pooling2d_1 (MaxPooling2D)  (4, 300, 480, 64)    0           leaky_re_lu_1[0][0]              
+__________________________________________________________________________________________________
+conv2d_2 (Conv2D)               (4, 300, 480, 128)   73856       max_pooling2d_1[0][0]            
+__________________________________________________________________________________________________
+batch_normalization_2 (BatchNor (4, 300, 480, 128)   384         conv2d_2[0][0]                   
+__________________________________________________________________________________________________
+leaky_re_lu_2 (LeakyReLU)       (4, 300, 480, 128)   0           batch_normalization_2[0][0]      
+__________________________________________________________________________________________________
+conv2d_3 (Conv2D)               (4, 300, 480, 64)    8256        leaky_re_lu_2[0][0]              
+__________________________________________________________________________________________________
+batch_normalization_3 (BatchNor (4, 300, 480, 64)    192         conv2d_3[0][0]                   
+__________________________________________________________________________________________________
+leaky_re_lu_3 (LeakyReLU)       (4, 300, 480, 64)    0           batch_normalization_3[0][0]      
+__________________________________________________________________________________________________
+conv2d_4 (Conv2D)               (4, 300, 480, 128)   73856       leaky_re_lu_3[0][0]              
+__________________________________________________________________________________________________
+batch_normalization_4 (BatchNor (4, 300, 480, 128)   384         conv2d_4[0][0]                   
+__________________________________________________________________________________________________
+leaky_re_lu_4 (LeakyReLU)       (4, 300, 480, 128)   0           batch_normalization_4[0][0]      
+__________________________________________________________________________________________________
+max_pooling2d_2 (MaxPooling2D)  (4, 150, 240, 128)   0           leaky_re_lu_4[0][0]              
+__________________________________________________________________________________________________
+conv2d_5 (Conv2D)               (4, 150, 240, 256)   33024       max_pooling2d_2[0][0]            
+__________________________________________________________________________________________________
+batch_normalization_5 (BatchNor (4, 150, 240, 256)   768         conv2d_5[0][0]                   
+__________________________________________________________________________________________________
+leaky_re_lu_5 (LeakyReLU)       (4, 150, 240, 256)   0           batch_normalization_5[0][0]      
+__________________________________________________________________________________________________
+conv2d_6 (Conv2D)               (4, 150, 240, 128)   295040      leaky_re_lu_5[0][0]              
+__________________________________________________________________________________________________
+batch_normalization_6 (BatchNor (4, 150, 240, 128)   384         conv2d_6[0][0]                   
+__________________________________________________________________________________________________
+leaky_re_lu_6 (LeakyReLU)       (4, 150, 240, 128)   0           batch_normalization_6[0][0]      
+__________________________________________________________________________________________________
+conv2d_7 (Conv2D)               (4, 150, 240, 256)   33024       leaky_re_lu_6[0][0]              
+__________________________________________________________________________________________________
+batch_normalization_7 (BatchNor (4, 150, 240, 256)   768         conv2d_7[0][0]                   
+__________________________________________________________________________________________________
+leaky_re_lu_7 (LeakyReLU)       (4, 150, 240, 256)   0           batch_normalization_7[0][0]      
+__________________________________________________________________________________________________
+max_pooling2d_3 (MaxPooling2D)  (4, 75, 120, 256)    0           leaky_re_lu_7[0][0]              
+__________________________________________________________________________________________________
+conv2d_8 (Conv2D)               (4, 75, 120, 512)    1180160     max_pooling2d_3[0][0]            
+__________________________________________________________________________________________________
+batch_normalization_8 (BatchNor (4, 75, 120, 512)    1536        conv2d_8[0][0]                   
+__________________________________________________________________________________________________
+leaky_re_lu_8 (LeakyReLU)       (4, 75, 120, 512)    0           batch_normalization_8[0][0]      
+__________________________________________________________________________________________________
+conv2d_9 (Conv2D)               (4, 75, 120, 256)    131328      leaky_re_lu_8[0][0]              
+__________________________________________________________________________________________________
+batch_normalization_9 (BatchNor (4, 75, 120, 256)    768         conv2d_9[0][0]                   
+__________________________________________________________________________________________________
+leaky_re_lu_9 (LeakyReLU)       (4, 75, 120, 256)    0           batch_normalization_9[0][0]      
+__________________________________________________________________________________________________
+conv2d_10 (Conv2D)              (4, 75, 120, 512)    1180160     leaky_re_lu_9[0][0]              
+__________________________________________________________________________________________________
+batch_normalization_10 (BatchNo (4, 75, 120, 512)    1536        conv2d_10[0][0]                  
+__________________________________________________________________________________________________
+leaky_re_lu_10 (LeakyReLU)      (4, 75, 120, 512)    0           batch_normalization_10[0][0]     
+__________________________________________________________________________________________________
+conv2d_11 (Conv2D)              (4, 75, 120, 256)    131328      leaky_re_lu_10[0][0]             
+__________________________________________________________________________________________________
+batch_normalization_11 (BatchNo (4, 75, 120, 256)    768         conv2d_11[0][0]                  
+__________________________________________________________________________________________________
+leaky_re_lu_11 (LeakyReLU)      (4, 75, 120, 256)    0           batch_normalization_11[0][0]     
+__________________________________________________________________________________________________
+conv2d_12 (Conv2D)              (4, 75, 120, 512)    1180160     leaky_re_lu_11[0][0]             
+__________________________________________________________________________________________________
+batch_normalization_12 (BatchNo (4, 75, 120, 512)    1536        conv2d_12[0][0]                  
+__________________________________________________________________________________________________
+leaky_re_lu_12 (LeakyReLU)      (4, 75, 120, 512)    0           batch_normalization_12[0][0]     
+__________________________________________________________________________________________________
+max_pooling2d_4 (MaxPooling2D)  (4, 25, 40, 512)     0           leaky_re_lu_12[0][0]             
+__________________________________________________________________________________________________
+conv2d_13 (Conv2D)              (4, 25, 40, 1024)    4719616     max_pooling2d_4[0][0]            
+__________________________________________________________________________________________________
+batch_normalization_13 (BatchNo (4, 25, 40, 1024)    3072        conv2d_13[0][0]                  
+__________________________________________________________________________________________________
+leaky_re_lu_13 (LeakyReLU)      (4, 25, 40, 1024)    0           batch_normalization_13[0][0]     
+__________________________________________________________________________________________________
+conv2d_14 (Conv2D)              (4, 25, 40, 512)     524800      leaky_re_lu_13[0][0]             
+__________________________________________________________________________________________________
+batch_normalization_14 (BatchNo (4, 25, 40, 512)     1536        conv2d_14[0][0]                  
+__________________________________________________________________________________________________
+leaky_re_lu_14 (LeakyReLU)      (4, 25, 40, 512)     0           batch_normalization_14[0][0]     
+__________________________________________________________________________________________________
+conv2d_15 (Conv2D)              (4, 25, 40, 1024)    4719616     leaky_re_lu_14[0][0]             
+__________________________________________________________________________________________________
+batch_normalization_15 (BatchNo (4, 25, 40, 1024)    3072        conv2d_15[0][0]                  
+__________________________________________________________________________________________________
+leaky_re_lu_15 (LeakyReLU)      (4, 25, 40, 1024)    0           batch_normalization_15[0][0]     
+__________________________________________________________________________________________________
+tf_op_layer_split (TensorFlowOp [(4, 3, 120, 512), ( 0           leaky_re_lu_12[0][0]             
+__________________________________________________________________________________________________
+conv2d_16 (Conv2D)              (4, 25, 40, 512)     524800      leaky_re_lu_15[0][0]             
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims (TensorF (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][0]          
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_1 (Tenso (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][1]          
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_2 (Tenso (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][2]          
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_3 (Tenso (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][3]          
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_4 (Tenso (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][4]          
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_5 (Tenso (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][5]          
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_6 (Tenso (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][6]          
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_7 (Tenso (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][7]          
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_8 (Tenso (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][8]          
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_9 (Tenso (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][9]          
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_10 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][10]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_11 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][11]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_12 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][12]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_13 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][13]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_14 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][14]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_15 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][15]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_16 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][16]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_17 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][17]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_18 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][18]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_19 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][19]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_20 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][20]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_21 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][21]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_22 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][22]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_23 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][23]         
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_24 (Tens (1, 4, 3, 120, 512)  0           tf_op_layer_split[0][24]         
+__________________________________________________________________________________________________
+batch_normalization_16 (BatchNo (4, 25, 40, 512)     1536        conv2d_16[0][0]                  
+__________________________________________________________________________________________________
+tf_op_layer_concat (TensorFlowO (25, 4, 3, 120, 512) 0           tf_op_layer_ExpandDims[0][0]     
+                                                                 tf_op_layer_ExpandDims_1[0][0]   
+                                                                 tf_op_layer_ExpandDims_2[0][0]   
+                                                                 tf_op_layer_ExpandDims_3[0][0]   
+                                                                 tf_op_layer_ExpandDims_4[0][0]   
+                                                                 tf_op_layer_ExpandDims_5[0][0]   
+                                                                 tf_op_layer_ExpandDims_6[0][0]   
+                                                                 tf_op_layer_ExpandDims_7[0][0]   
+                                                                 tf_op_layer_ExpandDims_8[0][0]   
+                                                                 tf_op_layer_ExpandDims_9[0][0]   
+                                                                 tf_op_layer_ExpandDims_10[0][0]  
+                                                                 tf_op_layer_ExpandDims_11[0][0]  
+                                                                 tf_op_layer_ExpandDims_12[0][0]  
+                                                                 tf_op_layer_ExpandDims_13[0][0]  
+                                                                 tf_op_layer_ExpandDims_14[0][0]  
+                                                                 tf_op_layer_ExpandDims_15[0][0]  
+                                                                 tf_op_layer_ExpandDims_16[0][0]  
+                                                                 tf_op_layer_ExpandDims_17[0][0]  
+                                                                 tf_op_layer_ExpandDims_18[0][0]  
+                                                                 tf_op_layer_ExpandDims_19[0][0]  
+                                                                 tf_op_layer_ExpandDims_20[0][0]  
+                                                                 tf_op_layer_ExpandDims_21[0][0]  
+                                                                 tf_op_layer_ExpandDims_22[0][0]  
+                                                                 tf_op_layer_ExpandDims_23[0][0]  
+                                                                 tf_op_layer_ExpandDims_24[0][0]  
+__________________________________________________________________________________________________
+leaky_re_lu_16 (LeakyReLU)      (4, 25, 40, 512)     0           batch_normalization_16[0][0]     
+__________________________________________________________________________________________________
+tf_op_layer_split_1 (TensorFlow [(25, 4, 3, 3, 512), 0           tf_op_layer_concat[0][0]         
+__________________________________________________________________________________________________
+conv2d_17 (Conv2D)              (4, 25, 40, 1024)    4719616     leaky_re_lu_16[0][0]             
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_25 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][0]        
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_26 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][1]        
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_27 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][2]        
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_28 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][3]        
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_29 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][4]        
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_30 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][5]        
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_31 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][6]        
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_32 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][7]        
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_33 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][8]        
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_34 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][9]        
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_35 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][10]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_36 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][11]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_37 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][12]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_38 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][13]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_39 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][14]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_40 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][15]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_41 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][16]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_42 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][17]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_43 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][18]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_44 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][19]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_45 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][20]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_46 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][21]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_47 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][22]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_48 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][23]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_49 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][24]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_50 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][25]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_51 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][26]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_52 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][27]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_53 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][28]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_54 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][29]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_55 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][30]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_56 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][31]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_57 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][32]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_58 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][33]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_59 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][34]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_60 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][35]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_61 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][36]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_62 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][37]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_63 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][38]       
+__________________________________________________________________________________________________
+tf_op_layer_ExpandDims_64 (Tens (1, 25, 4, 3, 3, 512 0           tf_op_layer_split_1[0][39]       
+__________________________________________________________________________________________________
+batch_normalization_17 (BatchNo (4, 25, 40, 1024)    3072        conv2d_17[0][0]                  
+__________________________________________________________________________________________________
+tf_op_layer_concat_1 (TensorFlo (40, 25, 4, 3, 3, 51 0           tf_op_layer_ExpandDims_25[0][0]  
+                                                                 tf_op_layer_ExpandDims_26[0][0]  
+                                                                 tf_op_layer_ExpandDims_27[0][0]  
+                                                                 tf_op_layer_ExpandDims_28[0][0]  
+                                                                 tf_op_layer_ExpandDims_29[0][0]  
+                                                                 tf_op_layer_ExpandDims_30[0][0]  
+                                                                 tf_op_layer_ExpandDims_31[0][0]  
+                                                                 tf_op_layer_ExpandDims_32[0][0]  
+                                                                 tf_op_layer_ExpandDims_33[0][0]  
+                                                                 tf_op_layer_ExpandDims_34[0][0]  
+                                                                 tf_op_layer_ExpandDims_35[0][0]  
+                                                                 tf_op_layer_ExpandDims_36[0][0]  
+                                                                 tf_op_layer_ExpandDims_37[0][0]  
+                                                                 tf_op_layer_ExpandDims_38[0][0]  
+                                                                 tf_op_layer_ExpandDims_39[0][0]  
+                                                                 tf_op_layer_ExpandDims_40[0][0]  
+                                                                 tf_op_layer_ExpandDims_41[0][0]  
+                                                                 tf_op_layer_ExpandDims_42[0][0]  
+                                                                 tf_op_layer_ExpandDims_43[0][0]  
+                                                                 tf_op_layer_ExpandDims_44[0][0]  
+                                                                 tf_op_layer_ExpandDims_45[0][0]  
+                                                                 tf_op_layer_ExpandDims_46[0][0]  
+                                                                 tf_op_layer_ExpandDims_47[0][0]  
+                                                                 tf_op_layer_ExpandDims_48[0][0]  
+                                                                 tf_op_layer_ExpandDims_49[0][0]  
+                                                                 tf_op_layer_ExpandDims_50[0][0]  
+                                                                 tf_op_layer_ExpandDims_51[0][0]  
+                                                                 tf_op_layer_ExpandDims_52[0][0]  
+                                                                 tf_op_layer_ExpandDims_53[0][0]  
+                                                                 tf_op_layer_ExpandDims_54[0][0]  
+                                                                 tf_op_layer_ExpandDims_55[0][0]  
+                                                                 tf_op_layer_ExpandDims_56[0][0]  
+                                                                 tf_op_layer_ExpandDims_57[0][0]  
+                                                                 tf_op_layer_ExpandDims_58[0][0]  
+                                                                 tf_op_layer_ExpandDims_59[0][0]  
+                                                                 tf_op_layer_ExpandDims_60[0][0]  
+                                                                 tf_op_layer_ExpandDims_61[0][0]  
+                                                                 tf_op_layer_ExpandDims_62[0][0]  
+                                                                 tf_op_layer_ExpandDims_63[0][0]  
+                                                                 tf_op_layer_ExpandDims_64[0][0]  
+__________________________________________________________________________________________________
+leaky_re_lu_17 (LeakyReLU)      (4, 25, 40, 1024)    0           batch_normalization_17[0][0]     
+__________________________________________________________________________________________________
+tf_op_layer_split_2 (TensorFlow [(40, 25, 4, 1, 3, 5 0           tf_op_layer_concat_1[0][0]       
+__________________________________________________________________________________________________
+conv2d_18 (Conv2D)              (4, 25, 40, 1024)    9438208     leaky_re_lu_17[0][0]             
+__________________________________________________________________________________________________
+tf_op_layer_Squeeze (TensorFlow (40, 25, 4, 3, 512)  0           tf_op_layer_split_2[0][0]        
+__________________________________________________________________________________________________
+tf_op_layer_Squeeze_1 (TensorFl (40, 25, 4, 3, 512)  0           tf_op_layer_split_2[0][1]        
+__________________________________________________________________________________________________
+tf_op_layer_Squeeze_2 (TensorFl (40, 25, 4, 3, 512)  0           tf_op_layer_split_2[0][2]        
+__________________________________________________________________________________________________
+batch_normalization_18 (BatchNo (4, 25, 40, 1024)    3072        conv2d_18[0][0]                  
+__________________________________________________________________________________________________
+tf_op_layer_concat_2 (TensorFlo (40, 25, 4, 3, 1536) 0           tf_op_layer_Squeeze[0][0]        
+                                                                 tf_op_layer_Squeeze_1[0][0]      
+                                                                 tf_op_layer_Squeeze_2[0][0]      
+__________________________________________________________________________________________________
+leaky_re_lu_18 (LeakyReLU)      (4, 25, 40, 1024)    0           batch_normalization_18[0][0]     
+__________________________________________________________________________________________________
+tf_op_layer_split_3 (TensorFlow [(40, 25, 4, 1, 1536 0           tf_op_layer_concat_2[0][0]       
+__________________________________________________________________________________________________
+conv2d_19 (Conv2D)              (4, 25, 40, 1024)    9438208     leaky_re_lu_18[0][0]             
+__________________________________________________________________________________________________
+tf_op_layer_Squeeze_3 (TensorFl (40, 25, 4, 1536)    0           tf_op_layer_split_3[0][0]        
+__________________________________________________________________________________________________
+tf_op_layer_Squeeze_4 (TensorFl (40, 25, 4, 1536)    0           tf_op_layer_split_3[0][1]        
+__________________________________________________________________________________________________
+tf_op_layer_Squeeze_5 (TensorFl (40, 25, 4, 1536)    0           tf_op_layer_split_3[0][2]        
+__________________________________________________________________________________________________
+batch_normalization_19 (BatchNo (4, 25, 40, 1024)    3072        conv2d_19[0][0]                  
+__________________________________________________________________________________________________
+tf_op_layer_concat_3 (TensorFlo (40, 25, 4, 4608)    0           tf_op_layer_Squeeze_3[0][0]      
+                                                                 tf_op_layer_Squeeze_4[0][0]      
+                                                                 tf_op_layer_Squeeze_5[0][0]      
+__________________________________________________________________________________________________
+leaky_re_lu_19 (LeakyReLU)      (4, 25, 40, 1024)    0           batch_normalization_19[0][0]     
+__________________________________________________________________________________________________
+tf_op_layer_Transpose (TensorFl (4, 25, 40, 4608)    0           tf_op_layer_concat_3[0][0]       
+__________________________________________________________________________________________________
+tf_op_layer_concat_4 (TensorFlo (4, 25, 40, 5632)    0           leaky_re_lu_19[0][0]             
+                                                                 tf_op_layer_Transpose[0][0]      
+__________________________________________________________________________________________________
+conv2d_20 (Conv2D)              (4, 25, 40, 1024)    51905536    tf_op_layer_concat_4[0][0]       
+__________________________________________________________________________________________________
+batch_normalization_20 (BatchNo (4, 25, 40, 1024)    3072        conv2d_20[0][0]                  
+__________________________________________________________________________________________________
+leaky_re_lu_20 (LeakyReLU)      (4, 25, 40, 1024)    0           batch_normalization_20[0][0]     
+__________________________________________________________________________________________________
+conv2d_21 (Conv2D)              (4, 25, 40, 40)      41000       leaky_re_lu_20[0][0]             
+==================================================================================================
+Total params: 90,401,800
+Trainable params: 90,381,256
+Non-trainable params: 20,544
+__________________________________________________________________________________________________
+
+Process finished with exit code 0
